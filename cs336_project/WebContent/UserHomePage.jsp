@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page import="java.io.*,java.io.PrintWriter, java.util.*, java.text.*, java.util.Date, java.sql.*"%>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +11,48 @@
 <body style="background-color:AntiqueWhite">
 <h1>Welcome to the AUCTION application!</h1>
 <h2>Please select whether you'd like to proceed as a buyer or seller.</h2>
+
+
+<%
+PrintWriter writer = response.getWriter();
+writer.println("<h1>Welcome Buyer!</h1><h2>Current Bids</h2>");
+
+try{
+    ApplicationDB db = new ApplicationDB();
+    Connection con = db.getConnection();
+        
+    ResultSet rs = null;
+	PreparedStatement st;
+	
+	// check if any new auctions started and change from pending to open
+    st = con.prepareStatement("Select * from item_auction status='pending'"); 
+	rs = st.executeQuery();
+    if (rs != null){
+    	while(rs.next()){
+    		// for every pending auction, compare date
+    		String datetime = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(new Date());
+			String start = rs.getString("start");
+    		
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
+    		
+			if (sdf.parse(datetime).compareTo(sdf.parse(endDate)) >= 0){
+	    		String item_id = Integer.toString(rs.getInt("item_id"));
+				// update status in item_auction
+	    		str = String.format("update table item_auction set status = open where item_id = %s", item_id);
+				int rows = con.createStatement().executeUpdate(str);
+			}
+    	}
+    }
+			
+  
+}
+
+catch(Exception e){      
+    out.println("ERROR:" + e);       
+}      
+
+%>
+
 
 <form id="userType">
 <label for="usertType">Select user type: </label>

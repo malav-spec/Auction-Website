@@ -9,6 +9,7 @@
 <title>Buyer</title>
 </head>
 <body style="background-color:AntiqueWhite">
+
 <%
 PrintWriter writer = response.getWriter();
 writer.println("<h1>Welcome Buyer!</h1><h2>Current Bids</h2>");
@@ -115,6 +116,10 @@ catch(Exception e){
 <form id="showType">
 <button type="submit" name="allAuctions" formaction="ShowAuctionsBuyer.jsp">View All Auctions</button>
 <button type="submit" name="allBids" formaction="ShowAuctionsBuyer.jsp">View All My Bids</button>
+</form>
+
+<form id="showAlerts" action="ShowAlerts.jsp">
+<input type="submit" name="showAlerts" value="Show My Alerts"/>
 </form>
 
 <form id="goBack" action="SearchBuyerByUserName.jsp">

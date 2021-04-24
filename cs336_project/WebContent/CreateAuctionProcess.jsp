@@ -55,6 +55,7 @@
 	    if (reserve.isEmpty()) 
 	    	reserve = "0.00";
 	    
+	 
 	    if (username != null){
 	    
 		  	// check type-specific conditions
@@ -64,7 +65,7 @@
 	    		else {
 	    			
 	    			// insert into item_auction and electronics
-	    		    String str = "insert into item_auction values ("+item_id+",'"+username+"','"+start+"','"+end+"',"+initial+","+reserve+","+increment+","+initial+",null,'"+title+"','open')";
+	    		    String str = "insert into item_auction values ("+item_id+",'"+username+"','"+start+"','"+end+"',"+initial+","+reserve+","+increment+","+initial+",null,'"+title+"','pending')";
 	    			int rows = con.createStatement().executeUpdate(str);
 	    		    str = "insert into electronics values ("+model_num+",'"+brand+"','"+color+"',"+item_id+")";
 	    			rows = con.createStatement().executeUpdate(str);
@@ -84,7 +85,7 @@
 	    			out.print("If selecting a Television please fill out all of the relevant fields.");
 	    		else{
 	    			// insert into item_auction and electronics
-	    		    String str = "insert into item_auction values ("+item_id+",'"+username+"','"+start+"','"+end+"',"+initial+","+reserve+","+increment+","+initial+",null,'"+title+"','open')";
+	    		    String str = "insert into item_auction values ("+item_id+",'"+username+"','"+start+"','"+end+"',"+initial+","+reserve+","+increment+","+initial+",null,'"+title+"','pending')";
 	    			int rows = con.createStatement().executeUpdate(str);
 	    		    str = "insert into electronics values ("+model_num+",'"+brand+"','"+color+"',"+item_id+")";
 	    			rows = con.createStatement().executeUpdate(str);
@@ -106,7 +107,7 @@
 	    		else{
 	    			
 	    			// insert into item_auction and electronics
-	    		    String str = "insert into item_auction values ("+item_id+",'"+username+"','"+start+"','"+end+"',"+initial+","+reserve+","+increment+","+initial+",null,'"+title+"','open')";
+	    		    String str = "insert into item_auction values ("+item_id+",'"+username+"','"+start+"','"+end+"',"+initial+","+reserve+","+increment+","+initial+",null,'"+title+"','pending')";
 	    			int rows = con.createStatement().executeUpdate(str);
 	    		    str = "insert into electronics values ("+model_num+",'"+brand+"','"+color+"',"+item_id+")";
 	    			rows = con.createStatement().executeUpdate(str);
