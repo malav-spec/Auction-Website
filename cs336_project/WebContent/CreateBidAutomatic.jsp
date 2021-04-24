@@ -17,10 +17,10 @@
 	    ApplicationDB db = new ApplicationDB();
 	    Connection con = db.getConnection();
 	    Object username = session.getAttribute("user");
-	    
+	    String open = "open";
 	    // show all items in auction -- but not their own
 	    ResultSet rs = null; 
-		PreparedStatement st = con.prepareStatement("Select * from item_auction join electronics using (item_id) where winning_bid is NULL and username <> '" + username + "' order by item_id desc limit 10" );
+		PreparedStatement st = con.prepareStatement("Select * from item_auction join electronics using (item_id) where winning_bid is NULL and status=" + "\""+open+"\"" + "and username <> '" + username + "' order by item_id desc limit 10" );
 		rs = st.executeQuery();
 		
 		if (rs != null){

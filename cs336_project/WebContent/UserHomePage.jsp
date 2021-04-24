@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" import="com.cs336.pkg.*"%>
 <%@ page import="java.io.*,java.io.PrintWriter, java.util.*, java.text.*, java.util.Date, java.sql.*"%>
+<%@ page import="javax.servlet.http.*,javax.servlet.*"%>
     
 <!DOCTYPE html>
 <html>
@@ -20,25 +21,28 @@ writer.println("<h1>Welcome Buyer!</h1><h2>Current Bids</h2>");
 try{
     ApplicationDB db = new ApplicationDB();
     Connection con = db.getConnection();
-        
+    Object username = session.getAttribute("user");
+    
     ResultSet rs = null;
 	PreparedStatement st;
-	
+	String pending = "pending";
 	// check if any new auctions started and change from pending to open
-    st = con.prepareStatement("Select * from item_auction status='pending'"); 
+    st = con.prepareStatement("Select * from item_auction where status=" + "\""+pending+"\""); 
 	rs = st.executeQuery();
+	
     if (rs != null){
     	while(rs.next()){
     		// for every pending auction, compare date
     		String datetime = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(new Date());
 			String start = rs.getString("start");
+    		String end = rs.getString("end");
     		
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
     		
-			if (sdf.parse(datetime).compareTo(sdf.parse(endDate)) >= 0){
+			if (sdf.parse(datetime).compareTo(sdf.parse(end)) >= 0){
 	    		String item_id = Integer.toString(rs.getInt("item_id"));
 				// update status in item_auction
-	    		str = String.format("update table item_auction set status = open where item_id = %s", item_id);
+	    		String str = String.format("update table item_auction set status = open where item_id = %s", item_id);
 				int rows = con.createStatement().executeUpdate(str);
 			}
     	}
@@ -70,6 +74,7 @@ catch(Exception e){
 <form id="userFunctions">
 <label for="userFunctions">User Functions: </label>
 <button type="submit" name="bidHistory" formaction="BidHistory.jsp">Bid History</button>
+<button type="submit" name="bidHistory" formaction="SetAlerts.jsp">Bid History</button>
 </form>
 
 <br>

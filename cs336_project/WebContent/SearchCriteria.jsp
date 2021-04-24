@@ -15,6 +15,7 @@
 
 PrintWriter writer = response.getWriter();
 writer.println("<h2>List of All Items sorted by the given filters</h2>");
+
 try{
 	ApplicationDB db = new ApplicationDB();
 	Connection con = db.getConnection();
@@ -26,12 +27,14 @@ try{
 	String item = request.getParameter("itemtext");
 	String title = request.getParameter("titletext");
 	String open = "open";
+	String pending = "pending";
 	
 	if(color == null && model == null && brand == null && brand == null && item == null && title == null ){
 		return;
 	}
 	
-	String stmt = "SELECT * from item_auction inner join electronics on item_auction.item_id=electronics.item_id where status=" +  "\""+open+"\" and ";
+	String stmt = "SELECT * from item_auction inner join electronics on item_auction.item_id=electronics.item_id where (status=" +  "\""+open+"\"" + "or status=" + "\""+pending+"\"" + ") and ";
+	//out.print(stmt);
 	String stmt1 = "SELECT * from item_auction inner join electronics on item_auction.item_id=electronics.item_id where ";
 	int count = 0;
 	
