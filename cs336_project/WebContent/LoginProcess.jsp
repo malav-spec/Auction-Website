@@ -69,10 +69,14 @@
 			     	// set username attribute it for user
 			    	session.setAttribute("user",username);   
 	        	}
-	        	else if (role.equals("admin"))
+	        	else if (role.equals("admin")){
 	        		response.setHeader("Location", "AdminHomePage.jsp");
-	        	else
+	        		session.setAttribute("admin",username);
+	        	}
+	        	else{
 	        		response.setHeader("Location", "CustomerRepHomePage.jsp");
+	        		session.setAttribute("customerRep",username);
+	        	}
 	        		
 	        	response.setHeader("Connection", "close");
 	    	}

@@ -22,7 +22,6 @@ try{
     ApplicationDB db = new ApplicationDB();
     Connection con = db.getConnection();
     Object username = session.getAttribute("user");
-    
     ResultSet rs = null;
 	PreparedStatement st;
 	String pending = "pending";
@@ -76,6 +75,13 @@ catch(Exception e){
 <button type="submit" name="bidHistory" formaction="BidHistory.jsp">Bid History</button>
 <button type="submit" name="bidHistory" formaction="SetAlerts.jsp">Set Alerts</button>
 </form>
+
+<br>
+<form id="Questions">
+<label for="Questions">Questions: </label>
+<button type="submit" name="FAQ" formaction="FAQ.jsp">Frequently Asked Questions</button>
+</form>
+
 
 <br>
 <form id="loginForm" action="Login.jsp">
