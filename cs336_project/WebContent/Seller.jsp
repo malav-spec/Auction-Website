@@ -22,7 +22,7 @@ try{
     ResultSet rs = null;
 
 	// check any closed auctions -- check if past date and winning_bid is null
-	String datetime = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(new Date());
+	String datetime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
   	st = con.prepareStatement("Select * from item_auction where status = 'open' and username='"+username+"' and end <= '"+datetime+"'");
 	rs = st.executeQuery();
   	
