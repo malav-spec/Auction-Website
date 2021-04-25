@@ -22,7 +22,7 @@ try{
 	String closed = "close%";
 	
 	
-	String total_stmt = "select item_id, title, curr_value from item_auction where status like " + "\""+closed+"\"" + " order by curr_value desc" ;
+	String total_stmt = "select item_id, title, winning_bid from item_auction where status like " + "\""+closed+"\"" + " order by winning_bid desc" ;
 	
 	
     ResultSet rs = null; 
@@ -39,7 +39,7 @@ try{
 		   		writer.println("<tr><td>"
 		   				+rs.getString("item_id")+"</td><td>"
 		   				+rs.getString("title")+"</td><td>"
-		   	           	+rs.getString("curr_value")+"</tr>");
+		   	           	+rs.getString("winning_bid")+"</tr>");
 		    }
 		   	
 		   	writer.println("</table>");
