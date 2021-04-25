@@ -88,10 +88,10 @@
     	}
     	
     	rs = null; 
- 		st = con.prepareStatement("Select count(*) from bid");
+ 		st = con.prepareStatement("select bid_num from bid order by bid_num desc limit 1");
  		rs = st.executeQuery();
  		rs.next();
- 		String bid_num = Integer.toString(rs.getInt("cont(*)") + 1);
+ 		String bid_num = Integer.toString(rs.getInt("bid_num") + 1);
  		
  		String value = String.valueOf(curr_value+Float.parseFloat(increment)); // update the value of the item -- assuming no one else is creating a bid at the same time
  		
@@ -127,7 +127,7 @@
  				// get latest msg_id
 				ResultSet rs2 = null; 
     			PreparedStatement st2 = null;
-    			st2 = con.prepareStatement("select count(msg_id) from item_alerts");
+    			st2 = con.prepareStatement("select msg_id from item_alerts order by msg_id desc limit 1");
 	   			rs2 = st2.executeQuery();
 	   			rs2.next();
 	   		    String msg_id = Integer.toString(rs2.getInt(1) + 1);

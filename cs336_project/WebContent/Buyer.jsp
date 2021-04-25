@@ -40,13 +40,13 @@ try{
     		
     		// check if can add new bid
     		if (buyer_increment + curr_value <= secret_max) {
-    			ResultSet rs2 = null; 
-    			PreparedStatement st2 = con.prepareStatement("Select count(*) from bid");
+    			ResultSet rs2 = null;  		
+				PreparedStatement st2 = con.prepareStatement("select bid_num from bid order by bid_num desc limit 1");
     	 		rs2 = st2.executeQuery();
     	 		rs2.next();
-    	 		String bid_num = Integer.toString(rs.getInt("cont(*)") + 1);
+    	 		String bid_num = Integer.toString(rs.getInt("bid_num)") + 1);
     	 		String value = Float.toString(buyer_increment + curr_value);
-    	 		
+    	 	
     	 		// TODO only insert if a row with the specified id number does not exist, otherwise update the row
     	 		String str = String.format("INSERT INTO bid (bid_num,username,item_id,increment,value) values(%s, %s, %s, %s, %s, %s)", bid_num, "'"+username+"'", item_id, buyer_increment, value);
     	 		Statement stmt = con.createStatement();

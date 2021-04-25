@@ -50,7 +50,7 @@ try{
 	   			String winning_username = rs2.getString("username");
 	   			
 	   			// get latest msg_id
-	   	    	st2 = con.prepareStatement("select count(msg_id) from item_alerts");
+    			st2 = con.prepareStatement("select msg_id from item_alerts order by msg_id desc limit 1");
 	   			rs2 = st2.executeQuery();
 	   			rs2.next();
 	   		    String msg_id = Integer.toString(rs2.getInt(1) + 1);
