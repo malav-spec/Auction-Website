@@ -32,16 +32,15 @@ try{
     if (rs != null){
     	while(rs.next()){
     		// for every pending auction, compare date
-    		String datetime = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(new Date());
+    		String datetime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 			String start = rs.getString("start");
-    		String end = rs.getString("end");
     		
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     		
-			if (sdf.parse(datetime).compareTo(sdf.parse(end)) >= 0){
+			if (sdf.parse(datetime).compareTo(sdf.parse(start)) >= 0){
 	    		String item_id = Integer.toString(rs.getInt("item_id"));
 				// update status in item_auction
-	    		String str = String.format("update table item_auction set status = open where item_id = %s", item_id);
+	    		String str = String.format("update item_auction set status = 'open' where item_id = %s", item_id);
 				int rows = con.createStatement().executeUpdate(str);
 			}
     	}
