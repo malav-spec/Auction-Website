@@ -20,7 +20,7 @@ try{
     Object username = session.getAttribute("user");
     String item_id = request.getParameter("itemTextField");
     String message = "";
-    PreparedStatement st = con.prepareStatement("select count(msg_id) from item_alerts");
+    PreparedStatement st = con.prepareStatement("select msg_id from item_alerts order by msg_id desc limit 1");
 	ResultSet rs = st.executeQuery();
 	rs.next();
     String msg_id = Integer.toString(rs.getInt(1) + 1);

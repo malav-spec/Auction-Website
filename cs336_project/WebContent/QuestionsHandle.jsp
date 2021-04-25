@@ -21,9 +21,9 @@
 			String await = "Awaiting response from the customer representative";
 			String closed = "no";
 	    	
-	    	// get latest item_id
+	    	// get latest ticket num
 	    	
-	    	PreparedStatement stmt = con.prepareStatement("select count(ticket_num) from queries");
+	    	PreparedStatement stmt = con.prepareStatement("select ticket_num from queries order by ticket_num limit 1");
 			ResultSet rs = stmt.executeQuery();
 			rs.next();
 		    String ticket_num = Integer.toString(rs.getInt(1) + 1);
