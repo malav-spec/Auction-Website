@@ -74,10 +74,10 @@ function validLogin(){
  	<br/>  
  	
 <form name="form" action="LoginProcess.jsp" id="loginForm"  method="post" onsubmit="return validLogin();">  
-Username: <input type="text" name="user"/><br/><br/>  
-<div id="pw">Password: <input type="password" name="password"/><br/><br/> </div>
+Username: <input type="text" name="user" required/><br/><br/>  
+<div id="pw">Password: <input type="password" name="password" required/><br/><br/> </div>
 
-<ul id="person_type">
+<ul id="person_type" >
   <li>
   	<div id="user"><input type="radio" id="User" name="role" value="user" onclick="enableRegister()" >
 	<label for="User">User</label></div><br>
@@ -100,7 +100,7 @@ Username: <input type="text" name="user"/><br/><br/>
 
 
 <br><br><br><br><br><br><br>
-<div id="footer"><p>Group 52 - Priya Parikh, Ryan Davis, </p></div>
+<div id="footer"><p>Group 52 - Priya Parikh, Ryan Davis, Malav Doshi, Kathan Patel </p></div>
 
 
 

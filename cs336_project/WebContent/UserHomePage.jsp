@@ -74,7 +74,7 @@ catch(Exception e){
 <form id="userFunctions">
 <label for="userFunctions">User Functions: </label>
 <button type="submit" name="bidHistory" formaction="BidHistory.jsp">Bid History</button>
-<button type="submit" name="bidHistory" formaction="SetAlerts.jsp">Bid History</button>
+<button type="submit" name="bidHistory" formaction="SetAlerts.jsp">Set Alerts</button>
 </form>
 
 <br>
