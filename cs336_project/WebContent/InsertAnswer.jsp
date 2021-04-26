@@ -23,8 +23,7 @@ try{
 	Object username = session.getAttribute("customerRep");
 	Object ticket = session.getAttribute("ticket");
 	
-	String stmt = "update queries set answer="+"\""+answer+"\"" +" and closed=" +"\""+yes+"\""+ " where ticket_num=" + "\""+ticket+"\"";
-	
+	String stmt = "update queries set answer="+"\""+answer+"\"" +" , closed=" +"\""+yes+"\""+ " where ticket_num=" + "\""+ticket+"\"";
 	ResultSet rs = null;
 	
 	PreparedStatement st = con.prepareStatement(stmt);

@@ -87,7 +87,7 @@ try{
 	}
 	
 	stmt = stmt + " where username=" + "\""+username+"\"";
-	out.println(stmt);
+	
     ResultSet rs = null; 
 	
 	PreparedStatement st = con.prepareStatement(stmt);

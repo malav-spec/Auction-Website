@@ -87,5 +87,10 @@ function checkAllBoxes(){
   <input type="submit" value="Update"><br><br>
 </form>
 
+<br><br>
+<form id="goBack" action="CustomerRepHomePage.jsp">
+<input type="submit" name="goBack" value="Go Back"/>
+</form>
+
 </body>
 </html>
