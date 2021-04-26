@@ -23,13 +23,13 @@ try{
 
     if (rs != null){
     	writer.println("<table BORDER=1>"
-	               +"<tr><th>Item ID</th><th>Title</th><th>Increment</<th>Current Value</th></tr>");
+	               +"<tr><th>Item ID</th><th>Title</th><th>Increment</th><th>Current Value</th></tr>");
 	   	while(rs.next()){	   			
 	   		writer.println("<tr><td>"
 	   				+rs.getString("item_id")+"</td><td>"
 	   				+rs.getString("title")+"</td><td>"
 	   		   		+rs.getString("Increment")+"</td><td>"
-	   				+rs.getString("value")+"</td><td></tr>");
+	   				+rs.getString("value")+"</tr>");
 	    }
 	    
 	   	
@@ -47,14 +47,6 @@ catch(Exception e){
 
 %>
 
-<br>
-<form id="createAuction" action="CreateAuction.jsp">
-<input type="submit" name="auction" value="Auction New Item"/>
-</form>
-<br>
-<form id=showMyAuctions action="ShowAuctionsSeller.jsp">
-<input type="submit" name="showAuctions" value="View All My Auctions"/>
-</form>
 <br>
 <form id="goBack" action="Buyer.jsp">
 <input type="submit" name="goBack" value="Go Back"/>

@@ -39,7 +39,7 @@
  		if (rs.getInt("exist") != 1)
  		{
  			out.println("That item does not exist!");
-    		out.println("<form id='goBack' action='CreateBid.jsp'> <br><br><br> <input type='submit' name='goBack' value='Go Back'/></form>");
+    		out.println("<form id='goBack' action='CreateBidManual.jsp'> <br><br><br> <input type='submit' name='goBack' value='Go Back'/></form>");
     		return;
  		}
     	
@@ -49,7 +49,7 @@
     	rs = st.executeQuery();
     	if (rs.next()) {
       		out.println("You cannot bid on your own item.");
-    		out.println("<form id='goBack' action='CreateBid.jsp'> <br><br><br> <input type='submit' name='goBack' value='Go Back'/></form>");
+    		out.println("<form id='goBack' action='CreateBidManual.jsp'> <br><br><br> <input type='submit' name='goBack' value='Go Back'/></form>");
 			return;
     	} 		
  		
@@ -59,7 +59,7 @@
     	rs = st.executeQuery();
     	if (rs.next()) {
     		out.println("You have already set automatic bidding for this item.");
-    		out.println("<form id='goBack' action='CreateBid.jsp'> <br><br><br> <input type='submit' name='goBack' value='Go Back'/></form>");
+    		out.println("<form id='goBack' action='CreateBidManual.jsp'> <br><br><br> <input type='submit' name='goBack' value='Go Back'/></form>");
 			return;
     	}
  		
@@ -75,30 +75,32 @@
     	if (Float.parseFloat(increment) < min_increment)
     	{
     		out.println("Your increment must be atleast " + min_increment+".");
-    		out.println("<form id='goBack' action='CreateBid.jsp'> <br><br><br> <input type='submit' name='goBack' value='Go Back'/></form>");
+    		out.println("<form id='goBack' action='CreateBidManual.jsp'> <br><br><br> <input type='submit' name='goBack' value='Go Back'/></form>");
     		return;
     	}
     	    	    	
     	rs = null; 
     	st = con.prepareStatement("select bid_num from bid order by bid_num desc limit 1");
  		rs = st.executeQuery();
- 		rs.next();
- 		String bid_num = Integer.toString(rs.getInt("bid_num") + 1);
+ 		String bid_num = rs.next() ? Integer.toString(rs.getInt("bid_num") + 1) : String.valueOf(1);
  		
  		
  		String value = String.valueOf(curr_value+Float.parseFloat(increment)); // update the value of the item -- assuming no one else is creating a bid at the same time
  		
  		// TODO only insert if a row with the specified id number does not exist, otherwise update the row
- 		String str = String.format("INSERT INTO bid (bid_num,username,item_id,secret_max,increment,value) values(%s, %s, %s, %s, %s, %s)", bid_num, "'"+username+"'", item_id, "NULL", increment, value);
- 		out.println(str);
+ 		String str = String.format("INSERT INTO bid (bid_num,username,item_id,increment,value) values(%s, %s, %s, %s, %s)", bid_num, "'"+username+"'", item_id, increment, value);
  		Statement stmt = con.createStatement();
         int rows = stmt.executeUpdate(str);        
                
         // update item auction to show current winning bid
-        str = String.format("update table item_auction set winning_bid = %s where item_id = %s", bid_num, item_id);
+        str = String.format("update item_auction set winning_bid = %s where item_id = %s", bid_num, item_id);
       	stmt = con.createStatement();
        	rows = stmt.executeUpdate(str);  
        	        
+       	str = String.format("update item_auction set curr_value = %s where item_id = %s", value, item_id);
+      	stmt = con.createStatement();
+       	rows = stmt.executeUpdate(str);
+       	
         // alert other buyers that a bid has been placed
         str = String.format("select username from bid where item_id = %s and username <> '%s'", item_id, username);
         st = con.prepareStatement(str);
@@ -110,14 +112,15 @@
     			PreparedStatement st2 = null;
     			st2 = con.prepareStatement("select msg_id from item_alerts order by msg_id desc limit 1");
 	   			rs2 = st2.executeQuery();
-	   			rs2.next();
-	   		    String msg_id = Integer.toString(rs2.getInt(1) + 1);
+	   		    String msg_id = rs2.next() ? Integer.toString(rs2.getInt(1) + 1) : String.valueOf(1);
 	   		     				
  				// alert this user
  				String curr_user = rs.getString("username");
- 				str = String.format("insert into item_alerts values (%s, %s, %s, 'You've been outbid for item# %s: %s')", msg_id, item_id, curr_user, item_id,title);
+ 				
+ 				str = String.format("insert into item_alerts (msg_id, item_id, username, message) values (%s, %s, %s, 'You have been outbid for item# %s: %s')", msg_id, item_id, "\""+curr_user+"\"", item_id,title);
  				stmt = con.createStatement();
  				rows = stmt.executeUpdate(str);
+ 				out.println("here");
  			}
  		}
  		
@@ -133,7 +136,7 @@
     	
 %>
 
-<form id="goBack" action="CreateBid.jsp">
+<form id="goBack" action="CreateBidManual.jsp">
 	<br><br><br>
 	<input type="submit" name="goBack" value="Go Back"/>
 </form>

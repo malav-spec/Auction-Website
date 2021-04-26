@@ -45,7 +45,7 @@
  		if (rs.getInt("exist") != 1)
  		{
  			out.println("That item does not exist!");
-    		out.println("<form id='goBack' action='CreateBid.jsp'> <br><br><br> <input type='submit' name='goBack' value='Go Back'/></form>");
+    		out.println("<form id='goBack' action='CreateBidAutomatic.jsp'> <br><br><br> <input type='submit' name='goBack' value='Go Back'/></form>");
     		return;
  		}
     	
@@ -55,7 +55,7 @@
     	rs = st.executeQuery();
     	if (rs.next()) {
       		out.println("You cannot bid on your own item.");
-    		out.println("<form id='goBack' action='CreateBid.jsp'> <br><br><br> <input type='submit' name='goBack' value='Go Back'/></form>");
+    		out.println("<form id='goBack' action='CreateBidAutomatic.jsp'> <br><br><br> <input type='submit' name='goBack' value='Go Back'/></form>");
 			return;
     	} 		
  		
@@ -65,7 +65,7 @@
     	rs = st.executeQuery();
     	if (rs.next()) {
       		out.println("You have already set automatic bidding for this item.");
-    		out.println("<form id='goBack' action='CreateBid.jsp'> <br><br><br> <input type='submit' name='goBack' value='Go Back'/></form>");
+    		out.println("<form id='goBack' action='CreateBidAutomatic.jsp'> <br><br><br> <input type='submit' name='goBack' value='Go Back'/></form>");
 			return;
     	}
  		
@@ -83,7 +83,7 @@
     	if (Float.parseFloat(increment) < min_increment)
     	{
     		out.println("Your increment must be atleast " + min_increment+".");
-    		out.println("<form id='goBack' action='CreateBid.jsp'> <br><br><br> <input type='submit' name='goBack' value='Go Back'/></form>");
+    		out.println("<form id='goBack' action='CreateBidAutomatic.jsp'> <br><br><br> <input type='submit' name='goBack' value='Go Back'/></form>");
     		return;
     	}
     	
@@ -98,7 +98,7 @@
  		// check if value is more than secret limit
  		if (Float.parseFloat(value) > Float.parseFloat(secret_max)){
  			out.println("The value of the item will be more than your upper limit. Please change your limit or go back.");
-    		out.println("<form id='goBack' action='CreateBid.jsp'> <br><br><br> <input type='submit' name='goBack' value='Go Back'/></form>");
+    		out.println("<form id='goBack' action='CreateBidAutomatic.jsp'> <br><br><br> <input type='submit' name='goBack' value='Go Back'/></form>");
     		return;
  		}
  		
@@ -108,15 +108,19 @@
        	int rows = stmt.executeUpdate(str);  
         
  		// TODO only insert if a row with the specified id number does not exist, otherwise update the row
- 		str = String.format("INSERT INTO bid (bid_num,username,item_id,increment,value) values(%s, %s, %s, %s, %s, %s)", bid_num, "'"+username+"'", item_id, increment, value);
+ 		str = String.format("INSERT INTO bid (bid_num,username,item_id,increment,value) values(%s, %s, %s, %s, %s)", bid_num, "'"+username+"'", item_id, increment, value);
  		out.println(str);
  		stmt = con.createStatement();
         rows = stmt.executeUpdate(str);        
         
         // update item auction to show current winning bid
-        str = String.format("update table item_auction set winning_bid = %s where item_id = %s", bid_num, item_id);
+        str = String.format("update item_auction set winning_bid = %s where item_id = %s", bid_num, item_id);
       	stmt = con.createStatement();
        	rows = stmt.executeUpdate(str);  
+       	
+       	str = String.format("update item_auction set curr_value = %s where item_id = %s", value, item_id);
+      	stmt = con.createStatement();
+       	rows = stmt.executeUpdate(str);
        	
         // alert other buyers that a bid has been placed
         str = String.format("select username from bid where item_id = %s and username <> '%s'", item_id, username);
@@ -152,7 +156,7 @@
     	
 %>
 
-<form id="goBack" action="CreateBid.jsp">
+<form id="goBack" action="CreateBidAutomatic.jsp">
 	<br><br><br>
 	<input type="submit" name="goBack" value="Go Back"/>
 </form>

@@ -23,8 +23,7 @@
     	// get latest item_id
     	PreparedStatement stmt = con.prepareStatement("select item_id from item_auction order by item_id desc limit 1;");
 		ResultSet rs = stmt.executeQuery();
-		rs.next();
-	    String item_id = Integer.toString(rs.getInt(1) + 1);
+	    String item_id = rs.next() ? Integer.toString(rs.getInt(1) + 1) : String.valueOf(1);
 	    
     	Map params = request.getParameterMap();
     	

@@ -22,12 +22,12 @@ try{
     ResultSet rs = null;
 
 	// show list of alerts for the buyer
-	st = con.prepareStatement("Select * from item_alerts i join item_auction using(item_id) where i.username <> '" + username + "' order by msg_id desc");
+	st = con.prepareStatement("Select * from item_alerts i join item_auction using(item_id) where i.username = '" + username + "' order by msg_id desc");
 	rs = st.executeQuery();
 	
 	if (rs != null){
 	   	writer.println("<table BORDER=1>"
-	               +"<tr><th>Message ID</th><th>Item ID</th><th>Item Title</th><th>End</th><th>Message</th>></tr>");
+	               +"<tr><th>Message ID</th><th>Item ID</th><th>Item Title</th><th>Message</th></tr>");
 	   	while(rs.next()){	 
 	   		writer.println("<tr><td>"	   				
 	   				+rs.getInt("msg_id")+"</td><td>"

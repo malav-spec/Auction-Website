@@ -52,10 +52,10 @@ catch(Exception e){
 %>
 
 <br>
-<form id="createManualBid" action="CreateManualBid.jsp">
+<form id="createManualBid" action="CreateBidManual.jsp">
 <input type="submit" name="bid" value="Place a Manual Bid"/>
 </form>
-<form id="createAutomaticBid" action="CreateAutomaticBid.jsp">
+<form id="createAutomaticBid" action="CreateBidAutomatic.jsp">
 <input type="submit" name="bid" value="Place an Automatic Bid"/>
 </form>
 <br>

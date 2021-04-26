@@ -53,9 +53,13 @@ try{
     	        int rows = stmt.executeUpdate(str);        
     		
     	        // update item auction to show current winning bid
-    	        str = String.format("update table item_auction set winning_bid = %s where item_id = %s", bid_num, item_id);
+    	        str = String.format("update item_auction set winning_bid = %s where item_id = %s", bid_num, item_id);
     	      	stmt = con.createStatement();
-    	       	rows = stmt.executeUpdate(str);  
+    	       	rows = stmt.executeUpdate(str);
+    	       	
+    	       	str = String.format("update item_auction set curr_value = %s where item_id = %s", value, item_id);
+    	      	stmt = con.createStatement();
+    	       	rows = stmt.executeUpdate(str);
     	       	        
     	        // alert other buyers that a bid has been placed
     	        str = String.format("select username from bid where item_id = %s and username <> '%s'", item_id, username);
@@ -80,6 +84,8 @@ try{
     			}
     		}
     	}
+    	
+    	
     }
 			
     rs = null;
@@ -94,7 +100,7 @@ try{
 	   				+rs.getString("title")+"</td><td>"
 	   		   		+rs.getString("Increment")+"</td><td>"
 
-	   				+rs.getString("value")+"</td><td></tr>");
+	   				+rs.getString("value")+"</tr>");
 	    }
 	   	
 	   	writer.println("</table>");
@@ -114,8 +120,7 @@ catch(Exception e){
 </form>
 
 <form id="showType">
-<button type="submit" name="allAuctions" formaction="ShowAuctionsBuyer.jsp">View All Auctions</button>
-<button type="submit" name="allBids" formaction="ShowAuctionsBuyer.jsp">View All My Bids</button>
+<button type="submit" name="allBids" formaction="ShowBids.jsp">View All My Bids</button>
 </form>
 
 <form id="showAlerts" action="ShowAlerts.jsp">

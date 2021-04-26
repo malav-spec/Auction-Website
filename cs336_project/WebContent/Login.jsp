@@ -74,8 +74,8 @@ function validLogin(){
  	<br/>  
  	
 <form name="form" action="LoginProcess.jsp" id="loginForm"  method="post" onsubmit="return validLogin();">  
-Username: <input type="text" name="user" required/><br/><br/>  
-<div id="pw">Password: <input type="password" name="password" required/><br/><br/> </div>
+Username: <input type="text" name="user"/><br/><br/>  
+<div id="pw">Password: <input type="password" name="password"/><br/><br/> </div>
 
 <ul id="person_type" >
   <li>
