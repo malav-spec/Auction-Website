@@ -24,8 +24,6 @@
 	    	// get latest ticket num
 	    	PreparedStatement stmt = con.prepareStatement("select ticket_num from queries order by ticket_num");
 			ResultSet rs = stmt.executeQuery();
-			
-			rs.next();
 			String ticket_num = rs.next() ? Integer.toString(rs.getInt(1) + 1) : String.valueOf(1);
 			
 			if(username != null  && question != null && !question.isEmpty()){
