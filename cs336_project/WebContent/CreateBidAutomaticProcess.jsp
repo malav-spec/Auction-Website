@@ -90,8 +90,8 @@
     	rs = null; 
  		st = con.prepareStatement("select bid_num from bid order by bid_num desc limit 1");
  		rs = st.executeQuery();
- 		rs.next();
- 		String bid_num = Integer.toString(rs.getInt("bid_num") + 1);
+ 		
+ 		String bid_num = rs.next() ? Integer.toString(rs.getInt("bid_num") + 1) : String.valueOf(1);
  		
  		String value = String.valueOf(curr_value+Float.parseFloat(increment)); // update the value of the item -- assuming no one else is creating a bid at the same time
  		
