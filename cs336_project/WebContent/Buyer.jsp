@@ -93,14 +93,15 @@ try{
 	rs = email_st.executeQuery();
 	if (rs != null){
 	   	writer.println("<table BORDER=1>"
-	               +"<tr><th>Item ID</th><th>Title</th><th>Increment</<th><th>Current Value</th></tr>");
+	               +"<tr><th>Item ID</th><th>Title</th><th>Increment</<th><th>Bid Value</th><th>Current Value</th></tr>");
 	   	while(rs.next()){	   			
 	   		writer.println("<tr><td>"
 	   				+rs.getString("item_id")+"</td><td>"
 	   				+rs.getString("title")+"</td><td>"
 	   		   		+rs.getString("Increment")+"</td><td>"
+	   		   		+rs.getString("value")+"</td><td>"
 
-	   				+rs.getString("value")+"</tr>");
+	   				+rs.getString("curr_value")+"</tr>");
 	    }
 	   	
 	   	writer.println("</table>");
