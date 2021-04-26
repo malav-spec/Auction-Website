@@ -23,7 +23,7 @@ try{
     PreparedStatement st = con.prepareStatement("select msg_id from item_alerts order by msg_id desc limit 1");
 	ResultSet rs = st.executeQuery();
 	rs.next();
-    String msg_id = Integer.toString(rs.getInt(1) + 1);
+    String msg_id = rs.next() ? Integer.toString(rs.getInt(1) + 1) : String.valueOf(1);
     
     //Set alerts
 	String str = "insert into item_alerts values ("+msg_id+",'"+item_id+"','"+username+"','"+message+"')";
